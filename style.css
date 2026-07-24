@@ -1,0 +1,1202 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans TC",
+    sans-serif;
+  background: #09090b;
+  color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: #09090b;
+}
+
+body {
+  overflow: hidden;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 19px;
+  background: rgba(20, 20, 24, 0.92);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.18);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: #fff;
+  color: #111;
+  font-weight: 760;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  width: min(760px, 100%);
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  background: rgba(22, 22, 25, 0.94);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.note {
+  margin-top: 16px;
+  color: #c9c9cf;
+  line-height: 1.65;
+}
+
+.warning,
+.error-box,
+.debug-box {
+  margin-top: 16px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.error-box {
+  background: #3b1116;
+  color: #ffd5da;
+}
+
+.debug-box {
+  background: #151519;
+  color: #bdbdc6;
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------------- 大螢幕 ---------------- */
+
+.screen-stage,
+.mobile-stage {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+}
+
+
+#remoteVideo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.screen-stage.rvm-ready #remoteVideo {
+  opacity: 0;
+}
+
+#rvmCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  image-rendering: auto;
+  pointer-events: none;
+}
+
+.screen-overlay {
+  position: absolute;
+  z-index: 10;
+  top: 18px;
+  right: 18px;
+  width: min(340px, calc(100vw - 36px));
+  max-height: calc(100dvh - 36px);
+  overflow: auto;
+  padding: 17px;
+  border-radius: 20px;
+  background: rgba(10, 10, 12, 0.86);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.36);
+}
+
+#qrCode {
+  display: grid;
+  place-items: center;
+  width: 284px;
+  max-width: 100%;
+  min-height: 284px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+
+#qrCode img,
+#qrCode canvas {
+  position: static;
+  width: 260px !important;
+  height: 260px !important;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.room {
+  margin: 12px 0 0;
+  color: #d5d5dc;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.status-pill {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 15px;
+  background: #151519;
+  color: #fff;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.quality-row {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.quality-row label {
+  color: #c9c9cf;
+  font-size: 13px;
+}
+
+.quality-row select {
+  width: 100%;
+  border-radius: 14px;
+}
+
+.build-label {
+  margin: 10px 0 0;
+  color: #a9f0b8;
+  font-size: 13px;
+}
+
+/* ---------------- 手機 ---------------- */
+
+#cameraVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #111;
+}
+
+#cameraVideo.selfie {
+  transform: scaleX(-1);
+}
+
+.mobile-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.36),
+      transparent 22%,
+      transparent 70%,
+      rgba(0, 0, 0, 0.48)
+    );
+}
+
+.mobile-toolbar {
+  position: absolute;
+  z-index: 30;
+  left: 14px;
+  right: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.mobile-toolbar > * {
+  pointer-events: auto;
+}
+
+.mobile-status {
+  max-width: 58vw;
+  padding: 11px 14px;
+  border-radius: 15px;
+  background: rgba(10, 10, 12, 0.88);
+  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.4);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+#startLayer {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 18px;
+  background: #08080a;
+}
+
+.start-status {
+  min-height: 1.5em;
+  margin: 14px 0 0;
+  color: #d8d8df;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 16px;
+  }
+
+  .panel {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .screen-overlay {
+    top: 10px;
+    right: 10px;
+    width: min(310px, calc(100vw - 20px));
+  }
+
+  #qrCode {
+    min-height: 234px;
+  }
+
+  #qrCode img,
+  #qrCode canvas {
+    width: 210px !important;
+    height: 210px !important;
+  }
+}
+
+
+/* v14：RVM 還沒產生第一幀時，明確顯示即時相機與處理狀態。 */
+.rvm-progress {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 15px;
+  background: #101f15;
+  color: #c9f7d4;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.rvm-progress.warning-state {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.rvm-progress.error-state {
+  background: #3b1116;
+  color: #ffd5da;
+}
+
+
+/* =========================================================
+   v15：預熱、人物色調、可靠轉向
+   ========================================================= */
+
+.tone-control {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.tone-control label {
+  color: #c9c9cf;
+  font-size: 13px;
+}
+
+.tone-control output {
+  color: #a9f0b8;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tone-control input[type="range"] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: #fff;
+}
+
+
+
+/* =========================================================
+   v16：透明人物圖層、即時轉向訊息、拍照精修
+   ========================================================= */
+
+.capture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.capture-actions button {
+  flex: 1 1 130px;
+  border-radius: 14px;
+}
+
+#rvmCanvas {
+  background: transparent !important;
+}
+
+.photo-layer {
+  position: absolute;
+  z-index: 80;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 18px;
+  background: rgba(0, 0, 0, .88);
+  backdrop-filter: blur(8px);
+}
+
+.photo-card {
+  width: min(980px, 100%);
+  padding: 18px;
+  border-radius: 20px;
+  background: #111115;
+  box-shadow: 0 18px 70px rgba(0,0,0,.55);
+}
+
+.photo-card h2 {
+  margin-bottom: 12px;
+}
+
+#photoCanvas {
+  display: block;
+  width: 100%;
+  max-height: 68dvh;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #222;
+}
+
+.photo-loading {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  padding: 28px;
+  border-radius: 14px;
+  background: #17171b;
+  color: #fff;
+  text-align: center;
+  line-height: 1.65;
+}
+
+.photo-note {
+  margin: 12px 0 0;
+  color: #c9c9cf;
+  line-height: 1.55;
+}
+
+.mobile-toolbar {
+  flex-wrap: wrap;
+}
+
+.mobile-toolbar .mobile-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mobile-toolbar .mobile-buttons button {
+  padding: 11px 14px;
+}
+
+@media (max-width: 640px) {
+  .photo-layer {
+    padding: 10px;
+  }
+
+  .photo-card {
+    padding: 12px;
+  }
+}
+
+
+/* =========================================================
+   v17：強制方向按鈕、背景色調分析、連拍精修
+   ========================================================= */
+
+.palette-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #151519;
+  color: #cfd0d8;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.mobile-buttons .rotate-force {
+  background: #fff;
+  color: #111;
+  font-weight: 760;
+}
+
+.photo-score {
+  margin-top: 8px;
+  color: #a9f0b8;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .mobile-toolbar {
+    align-items: stretch;
+  }
+
+  .mobile-toolbar .mobile-buttons {
+    width: 100%;
+  }
+
+  .mobile-toolbar .mobile-buttons button {
+    flex: 1 1 30%;
+  }
+
+  .mobile-status {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   v18：固定橫向、無空白旋轉、鏡頭框編輯器
+   ========================================================= */
+
+#rvmCanvas,
+#framePreviewCanvas {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#framePreviewCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+.screen-stage.frame-editing #framePreviewCanvas {
+  opacity: .86;
+}
+
+.screen-stage.frame-editing #rvmCanvas {
+  opacity: .35;
+}
+
+.frame-outline {
+  position: absolute;
+  z-index: 7;
+  display: none;
+  border: 3px solid rgba(255,255,255,.95);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 9999px rgba(0,0,0,.35),
+    0 0 0 1px rgba(0,0,0,.75) inset;
+  pointer-events: none;
+}
+
+.screen-stage.frame-editing .frame-outline {
+  display: block;
+}
+
+.frame-outline::before,
+.frame-outline::after {
+  content: "";
+  position: absolute;
+  background: rgba(255,255,255,.55);
+  pointer-events: none;
+}
+
+.frame-outline::before {
+  top: 33.333%;
+  bottom: 33.333%;
+  left: -1px;
+  right: -1px;
+  border-top: 1px solid rgba(255,255,255,.55);
+  border-bottom: 1px solid rgba(255,255,255,.55);
+  background: transparent;
+}
+
+.frame-outline::after {
+  left: 33.333%;
+  right: 33.333%;
+  top: -1px;
+  bottom: -1px;
+  border-left: 1px solid rgba(255,255,255,.55);
+  border-right: 1px solid rgba(255,255,255,.55);
+  background: transparent;
+}
+
+.frame-editor-hit {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  display: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.frame-editor-hit.dragging {
+  cursor: grabbing;
+}
+
+.screen-stage.frame-editing .frame-editor-hit {
+  display: block;
+}
+
+.frame-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.frame-controls button {
+  min-width: 0;
+  border-radius: 14px;
+  padding: 11px 8px;
+}
+
+.frame-controls button:disabled {
+  opacity: .35;
+}
+
+.frame-help {
+  margin-top: 8px;
+  color: #c9c9cf;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.frame-status {
+  margin-top: 8px;
+  color: #a9f0b8;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+.rotation-note {
+  margin-top: 8px;
+  color: #ffe3a2;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .frame-controls {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =========================================================
+   v19：安全拍照與裁切式鏡頭框
+   ========================================================= */
+
+.safe-photo-note {
+  margin-top: 8px;
+  color: #a9f0b8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.frame-outline {
+  border-color: rgba(168, 255, 187, .98);
+}
+
+.screen-stage.frame-editing .frame-outline::before,
+.screen-stage.frame-editing .frame-outline::after {
+  border-color: rgba(168, 255, 187, .55);
+}
+
+
+/* =========================================================
+   v20：真正可拖曳的裁切框
+   ========================================================= */
+
+.frame-zoom-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.frame-zoom-row label,
+.frame-zoom-row output {
+  color: #c9c9cf;
+  font-size: 12px;
+}
+
+.frame-zoom-row input[type="range"] {
+  width: 100%;
+  accent-color: #a8ffbb;
+}
+
+.screen-stage.frame-editing #framePreviewCanvas {
+  opacity: 1;
+  filter: brightness(.78);
+}
+
+.screen-stage.frame-editing #rvmCanvas {
+  opacity: 0;
+}
+
+.frame-outline {
+  border-color: #a8ffbb;
+  cursor: move;
+}
+
+.frame-outline::after {
+  content: "拖曳綠框移動裁切範圍";
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 16px);
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .76);
+  color: #fff;
+  font-size: 12px;
+  border: 0;
+  pointer-events: none;
+}
+
+.frame-editor-hit {
+  cursor: crosshair;
+}
+
+.frame-editor-hit.dragging {
+  cursor: grabbing;
+}
+
+
+/* =========================================================
+   v21：人物輸出與 background.jpg 使用同一畫面比例
+   ========================================================= */
+
+.alignment-note {
+  margin-top: 8px;
+  color: #a9f0b8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#rvmCanvas,
+#framePreviewCanvas {
+  object-position: center center;
+}
+
+
+/* =========================================================
+   v22：WebRTC / ICE 連線檢測
+   ========================================================= */
+
+.connection-diagnostics {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 15px;
+  background: #101014;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.connection-diagnostics h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.connection-diagnostics pre {
+  margin: 0;
+  max-height: 300px;
+  overflow: auto;
+  color: #d7d7df;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.connection-diagnostics.ok {
+  border-color: rgba(137, 255, 166, .45);
+  background: #0d1d12;
+}
+
+.connection-diagnostics.warning {
+  border-color: rgba(255, 204, 102, .5);
+  background: #2b210c;
+}
+
+.connection-diagnostics.failed {
+  border-color: rgba(255, 116, 132, .55);
+  background: #2b0f14;
+}
+
+.diagnostic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.diagnostic-actions button {
+  flex: 1 1 120px;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.mobile-diagnostic-panel {
+  position: absolute;
+  z-index: 35;
+  top: max(10px, env(safe-area-inset-top));
+  left: 10px;
+  width: min(420px, calc(100vw - 20px));
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(10, 10, 13, .88);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+}
+
+.mobile-diagnostic-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+  user-select: none;
+}
+
+.mobile-diagnostic-panel pre {
+  margin: 9px 0 0;
+  max-height: 28dvh;
+  overflow: auto;
+  color: #d8d8df;
+  font: 11px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mobile-diagnostic-panel .diagnostic-actions {
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .connection-diagnostics pre {
+    max-height: 220px;
+  }
+}
+
+
+/* =========================================================
+   v23：Room handshake 與手機通話到達確認
+   ========================================================= */
+
+.handshake-badge {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #151519;
+  color: #d8d8df;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.handshake-badge.ok {
+  background: #102517;
+  color: #c9f7d4;
+}
+
+.handshake-badge.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.handshake-badge.failed {
+  background: #3b1116;
+  color: #ffd5da;
+}
+
+
+/* =========================================================
+   v24：大螢幕本機 PeerJS 自我檢測
+   ========================================================= */
+
+.self-test-result {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #151519;
+  color: #d8d8df;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.self-test-result.ok {
+  background: #102517;
+  color: #c9f7d4;
+}
+
+.self-test-result.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.self-test-result.failed {
+  background: #3b1116;
+  color: #ffd5da;
+}
+
+
+/* =========================================================
+   v25：手機相機權限／逾時檢測
+   ========================================================= */
+
+.camera-preflight {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #151519;
+  color: #d8d8df;
+  font: 12px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.camera-preflight.ok {
+  background: #102517;
+  color: #c9f7d4;
+}
+
+.camera-preflight.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.camera-preflight.failed {
+  background: #3b1116;
+  color: #ffd5da;
+}
+
+.camera-help-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.camera-help-actions button {
+  flex: 1 1 150px;
+  border-radius: 13px;
+  padding: 11px 12px;
+}
+
+
+/* v26：相機成功與 PeerJS 連線錯誤分離 */
+.camera-preflight.connection-failed {
+  border: 1px solid rgba(255, 204, 102, .55);
+}
+
+.mobile-status.connection-error {
+  background: rgba(75, 45, 0, .94);
+  color: #ffe3a2;
+}
+
+
+/* =========================================================
+   v27：後鏡頭主鏡選擇與實際畫質顯示
+   ========================================================= */
+
+.mobile-camera-select {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.mobile-camera-select label {
+  color: #c9c9cf;
+  font-size: 13px;
+}
+
+.mobile-camera-select select {
+  width: 100%;
+  border-radius: 14px;
+  background: #232329;
+}
+
+.camera-quality-report {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #101f15;
+  color: #c9f7d4;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.camera-quality-report.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+
+/* =========================================================
+   v28：依螢幕尺寸即時偵測，固定顯示完整背景圖
+   ========================================================= */
+
+/*
+  .screen-stage 只代表瀏覽器可用區域。
+  真正的背景、人物與鏡頭框全部放在 .composition-viewport，
+  並維持 background.jpg 的原始比例。
+*/
+.screen-stage {
+  display: block;
+  background: #050506 !important;
+}
+
+.composition-viewport {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  background: #252525;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    0 18px 80px rgba(0,0,0,.55);
+}
+
+.composition-viewport > #remoteVideo,
+.composition-viewport > #rvmCanvas,
+.composition-viewport > #framePreviewCanvas,
+.composition-viewport > .frame-editor-hit {
+  inset: 0;
+}
+
+/*
+  RVM Canvas 已經使用 background.jpg 的邏輯比例。
+  這裡鋪滿同一個 composition box，避免各瀏覽器各自做 contain
+  時出現 1～2 像素的邊界或裁切誤差。
+*/
+.composition-viewport > #rvmCanvas {
+  object-fit: fill;
+}
+
+.display-fit-status {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #102517;
+  color: #c9f7d4;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.display-fit-status.warning {
+  background: #4b2d00;
+  color: #ffe3a2;
+}
+
+.display-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.display-actions button {
+  min-width: 0;
+  padding: 11px 9px;
+  border-radius: 14px;
+}
+
+.show-controls-btn {
+  position: absolute;
+  z-index: 30;
+  top: 14px;
+  right: 14px;
+  display: none;
+  padding: 11px 15px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(10,10,12,.84);
+  backdrop-filter: blur(9px);
+}
+
+.screen-stage.controls-hidden .screen-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(24px);
+}
+
+.screen-stage.controls-hidden .show-controls-btn {
+  display: block;
+}
+
+.screen-overlay {
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+}
+
+/*
+  任何解析度都維持可操作；小高度螢幕時縮小控制區起始尺寸。
+*/
+@media (max-height: 760px) {
+  .screen-overlay {
+    top: 8px;
+    right: 8px;
+    width: min(320px, calc(100vw - 16px));
+    max-height: calc(100dvh - 16px);
+    padding: 13px;
+  }
+
+  #qrCode {
+    min-height: 190px;
+  }
+
+  #qrCode img,
+  #qrCode canvas {
+    width: 170px !important;
+    height: 170px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .display-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.background-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  filter: saturate(0.98) contrast(0.98);
+}
+
+.composition-viewport > #remoteVideo {
+  z-index: 1;
+}
+
+.composition-viewport > #rvmCanvas {
+  z-index: 2;
+}
+
+.composition-viewport > #framePreviewCanvas,
+.composition-viewport > .frame-editor-hit,
+.composition-viewport > .frame-outline {
+  z-index: 3;
+}
+
+.quality-row > button {
+  border-radius: 14px;
+  padding: 11px 13px;
+}
